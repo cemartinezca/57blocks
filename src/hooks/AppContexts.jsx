@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMusicList } from "./useMusicList";
+import { useFavorites, useMusicList } from "./useMusicList";
 
-const initialToken = localStorage.getItem("token") || null;
+const tokenLabel = "token";
+const initialToken = localStorage.getItem(tokenLabel) || null;
 
 export const MusicContext = createContext(null);
 export const AuthContext = createContext(null);
@@ -20,8 +21,8 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     token ?
-      localStorage.setItem("token", token) :
-      localStorage.removeItem("token");
+      localStorage.setItem(tokenLabel, token) :
+      localStorage.removeItem(tokenLabel);
   }, [token]);
 
   const handleLogin = async () => {
@@ -40,10 +41,11 @@ export const AppProvider = ({ children }) => {
     onLogout: handleLogout,
   }
 
-  const [musicList, updateMusicList] = useMusicList();
+  const music = useMusicList();
+  const favorites = useFavorites();
   return (
     <AuthContext.Provider value={authValue}>
-      <MusicContext.Provider value={{ musicList, updateMusicList }}>
+      <MusicContext.Provider value={{ ...music, ...favorites }}>
         { children }
       </MusicContext.Provider>
     </AuthContext.Provider>

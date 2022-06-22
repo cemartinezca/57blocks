@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { Avatar, Box, Button, chakra, Flex, FormControl, Heading, Input, InputGroup, InputLeftElement, InputRightElement, Stack, useColorModeValue } from "@chakra-ui/react";
 import { FaLock, FaUserAlt } from "react-icons/fa";
-import BasePage from '../Page';
 import { useAuth } from '../../hooks';
 import { Navigate } from 'react-router-dom';
 
@@ -22,65 +21,63 @@ const LoginPage = () => {
   const handleShowClick = () => setShowPassword(!showPassword);
   
   return (
-    <BasePage>
-      <Flex h="100vh" w="100wh" alignItems="center" justifyContent="center" bg={background}>
-        <Stack
-          bg={formBackground}
-          p={12}
-          borderRadius={8}
-          boxShadow="lg"
-          alignItems="center"
-        >
-          <Avatar />
-          <Heading color="teal.400">Welcome</Heading>
-          <Box minW={{ base: "90%", md: "468px" }}>
-            <form>
-              <Stack
-                spacing={4}
-                p="1rem"
+    <Flex h="100vh" w="100wh" alignItems="center" justifyContent="center" bg={background}>
+      <Stack
+        bg={formBackground}
+        p={12}
+        borderRadius={8}
+        boxShadow="lg"
+        alignItems="center"
+      >
+        <Avatar />
+        <Heading color="teal.400">Welcome</Heading>
+        <Box w={{ base: "90%", md: "auto" }}>
+          <form>
+            <Stack
+              spacing={4}
+              p="1rem"
+            >
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<CFaUserAlt />}
+                  />
+                  <Input type="text" placeholder="user" />
+                </InputGroup>
+              </FormControl>
+              <FormControl>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<CFaLock />}
+                  />
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                  />
+                  <InputRightElement width="4.5rem">
+                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+                      {showPassword ? "Hide" : "Show"}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Button
+                borderRadius={0}
+                type="button"
+                variant="solid"
+                colorScheme="teal"
+                width="full"
+                onClick={onLogin}
               >
-                <FormControl>
-                  <InputGroup>
-                    <InputLeftElement
-                      pointerEvents="none"
-                      children={<CFaUserAlt />}
-                    />
-                    <Input type="text" placeholder="user" />
-                  </InputGroup>
-                </FormControl>
-                <FormControl>
-                  <InputGroup>
-                    <InputLeftElement
-                      pointerEvents="none"
-                      children={<CFaLock />}
-                    />
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Password"
-                    />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                        {showPassword ? "Hide" : "Show"}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
-                <Button
-                  borderRadius={0}
-                  type="button"
-                  variant="solid"
-                  colorScheme="teal"
-                  width="full"
-                  onClick={onLogin}
-                >
-                  Login
-                </Button>
-              </Stack>
-            </form>
-          </Box>
-        </Stack>
-      </Flex>
-    </BasePage>
+                Login
+              </Button>
+            </Stack>
+          </form>
+        </Box>
+      </Stack>
+    </Flex>
   );
 }
  

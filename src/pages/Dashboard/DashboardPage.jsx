@@ -1,7 +1,6 @@
-import { Avatar, Box, Button, Flex, HStack, IconButton, Link, Menu, MenuButton, MenuItem, MenuList, Stack, useColorModeValue, useDisclosure } from "@chakra-ui/react";
-import { Outlet, Link as RouterLink} from "react-router-dom";
+import { Avatar, Box, Button, Flex, HStack, IconButton, Menu, MenuButton, MenuItem, MenuList, Stack, useColorModeValue, useDisclosure } from "@chakra-ui/react";
+import { Outlet, NavLink as RouterLink} from "react-router-dom";
 import React from "react";
-import BasePage from "../Page";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useAuth } from "../../hooks";
 
@@ -11,26 +10,14 @@ const Links = [
   { label: "Canvas", link: "canvas"},
 ];
 
-const NavLink = ({ children }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={"#"}>
-    {children}
-  </Link>
-);
-
 const Dashboard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { onLogout } = useAuth();
 
+  let activeClassName = "selected";
+
   return (
-  <BasePage>
+  <Flex h="100vh" direction="column">
     <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
         <IconButton
@@ -48,11 +35,12 @@ const Dashboard = () => {
             {
               Links.map((value, idx) => {
                 const { link, label } = value;
-                return (
-                  <NavLink key={`link-${idx}`} >
-                    <RouterLink to={`/dashboard/${link}`}>{label}</RouterLink>
-                  </NavLink>
-                )
+                return <RouterLink key={`link-${idx}`} to={`/dashboard/${link}`} 
+                className={({ isActive }) =>
+                isActive ? activeClassName : undefined
+              }>
+                           {label}
+                       </RouterLink>
               })
             }
           </HStack>
@@ -81,11 +69,7 @@ const Dashboard = () => {
             {
               Links.map((value, idx) => {
                 const { link, label } = value;
-                return (
-                  <NavLink key={`link-${idx}`} >
-                    <RouterLink to={`/dashboard/${link}`}>{label}</RouterLink>
-                  </NavLink>
-                )
+                return <RouterLink to={`/dashboard/${link}`}  className={isActive => "nav-link" + (!isActive ? " unselected" : "")}>{label}</RouterLink>
               })
             }
           </Stack>
@@ -93,7 +77,7 @@ const Dashboard = () => {
       ) : null}
     </Box>
     <Outlet />
-  </BasePage>
+  </Flex>
   );
 }
  

@@ -8,8 +8,6 @@ import { ColorSwitcher } from './components';
 import Routes from './Routes';
 
 function App() {
-  // const { colorMode } = useColorMode();
-  // const background = colorMode === "light" ? "blue.300" : "BlackAlpha.800";
   return (
     <ChakraProvider theme={theme}>
       <AppProvider>
